@@ -148,13 +148,17 @@
     self.window.windowLevel = self.windowLevel;
     self.window.userInteractionEnabled = NO;
 
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    BOOL isLargeStatusBar = statusBarHeight > 20.0;
+
     CGFloat const kMeterWidth = 60.0;
+    CGFloat const kPadding = isLargeStatusBar ? 14.0 : 5.0;
+
     CGFloat xOrigin = 0.0;
-    CGFloat xPadding = 5.0;
     UIViewAutoresizing autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     switch (self.position) {
         case KMCGeigerCounterPositionLeft:
-            xOrigin = xPadding;
+            xOrigin = kPadding;
             autoresizingMask |= UIViewAutoresizingFlexibleRightMargin;
             break;
         case KMCGeigerCounterPositionMiddle:
@@ -162,15 +166,12 @@
             autoresizingMask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
             break;
         case KMCGeigerCounterPositionRight:
-            xOrigin = (CGRectGetWidth(self.window.bounds) - kMeterWidth - xPadding);
+            xOrigin = (CGRectGetWidth(self.window.bounds) - kMeterWidth - kPadding);
             autoresizingMask |= UIViewAutoresizingFlexibleLeftMargin;
             break;
     }
 
     UIFont *font = [UIFont boldSystemFontOfSize:10.0];
-
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    BOOL isLargeStatusBar = statusBarHeight > 20.0;
 
     CGFloat meterHeight = font.lineHeight + 2.0;
     self.meterLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin,
