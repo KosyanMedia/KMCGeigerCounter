@@ -10,5 +10,4 @@ Pod::Spec.new do |s|
   s.source           = { :git => "'https://github.com/KosyanMedia/KMCGeigerCounter.git", :tag => s.version.to_s }
   s.requires_arc     = true
   s.source_files     = "KMCGeigerCounter/*.{h,m}"
-  s.resources        = "KMCGeigerCounter/*.aiff"
 end

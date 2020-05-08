@@ -7,7 +7,6 @@
 //
 
 #import "KMCGeigerCounter.h"
-#import <AudioToolbox/AudioToolbox.h>
 
 @interface KMCGeigerCounter ()
 
@@ -20,7 +19,6 @@
 @property (nonatomic, strong) UIColor *meterBadColor;
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic, assign) SystemSoundID tickSoundID;
 
 @property (nonatomic, assign) NSInteger frameNumber;
 
@@ -100,13 +98,6 @@
 - (void)displayLinkWillDraw:(CADisplayLink *)displayLink
 {
     CFTimeInterval currentFrameTime = displayLink.timestamp;
-    CFTimeInterval frameDuration = currentFrameTime - [self lastFrameTime];
-
-    // Frames should be even multiples of hardwareFrameDuration.
-    // If a frame takes two frame durations, we dropped at least one, so click.
-    if (1.5 < frameDuration / [self hardwareFrameDuration]) {
-        AudioServicesPlaySystemSound(self.tickSoundID);
-    }
 
     [self recordFrameTime:currentFrameTime];
 
@@ -117,11 +108,6 @@
 
 - (void)start
 {
-    NSURL *tickSoundURL = [[NSBundle bundleForClass:KMCGeigerCounter.class] URLForResource:@"KMCGeigerCounterTick" withExtension:@"aiff"];
-    SystemSoundID tickSoundID;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef) tickSoundURL, &tickSoundID);
-    self.tickSoundID = tickSoundID;
-
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkWillDraw:)];
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     [self clearLastSecondOfFrameTimes];
@@ -131,9 +117,6 @@
 {
     [self.displayLink invalidate];
     self.displayLink = nil;
-
-    AudioServicesDisposeSystemSoundID(self.tickSoundID);
-    self.tickSoundID = 0;
 }
 
 - (void)setRunning:(BOOL)running
@@ -245,10 +228,6 @@
 - (void)dealloc
 {
     [_displayLink invalidate];
-
-    if (_tickSoundID) {
-        AudioServicesDisposeSystemSoundID(_tickSoundID);
-    }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 

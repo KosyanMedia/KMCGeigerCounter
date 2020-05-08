@@ -11,7 +11,6 @@
 		0A7492D7213B1FE800D773B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A7492D5213B1FE800D773B6 /* Main.storyboard */; };
 		0A7492D9213B1FE900D773B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A7492D8213B1FE900D773B6 /* Assets.xcassets */; };
 		0A7492DC213B1FE900D773B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A7492DA213B1FE900D773B6 /* LaunchScreen.storyboard */; };
-		0A7492E2213B200000D773B6 /* KMCGeigerCounterTick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0AAC72F219F7096D00D6522D /* KMCGeigerCounterTick.aiff */; };
 		0A7492EA213B215E00D773B6 /* KMCGeigerCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAC72F419F7096D00D6522D /* KMCGeigerCounter.m */; };
 		0A7492EE213B240100D773B6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7492ED213B240100D773B6 /* TableViewController.swift */; };
 		0A7492F0213B2F5700D773B6 /* ExorbitantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7492EF213B2F5700D773B6 /* ExorbitantTableViewCell.swift */; };
@@ -35,7 +34,6 @@
 		0A7492F3213B2F7A00D773B6 /* TitleConfiguring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleConfiguring.swift; sourceTree = "<group>"; };
 		0A7492F5213B304D00D773B6 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		0A7492F7213B4F5600D773B6 /* CheapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheapTableViewCell.swift; sourceTree = "<group>"; };
-		0AAC72F219F7096D00D6522D /* KMCGeigerCounterTick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = KMCGeigerCounterTick.aiff; sourceTree = "<group>"; };
 		0AAC72F319F7096D00D6522D /* KMCGeigerCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMCGeigerCounter.h; sourceTree = "<group>"; };
 		0AAC72F419F7096D00D6522D /* KMCGeigerCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMCGeigerCounter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,7 +88,6 @@
 		0AAC72F119F7091800D6522D /* KMCGeigerCounter */ = {
 			isa = PBXGroup;
 			children = (
-				0AAC72F219F7096D00D6522D /* KMCGeigerCounterTick.aiff */,
 				0AAC72F319F7096D00D6522D /* KMCGeigerCounter.h */,
 				0AAC72F419F7096D00D6522D /* KMCGeigerCounter.m */,
 			);
@@ -140,6 +137,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -160,7 +158,6 @@
 			files = (
 				0A7492DC213B1FE900D773B6 /* LaunchScreen.storyboard in Resources */,
 				0A7492D9213B1FE900D773B6 /* Assets.xcassets in Resources */,
-				0A7492E2213B200000D773B6 /* KMCGeigerCounterTick.aiff in Resources */,
 				0A7492D7213B1FE800D773B6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
