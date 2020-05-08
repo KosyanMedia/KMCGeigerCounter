@@ -64,21 +64,16 @@
     NSInteger droppedFrameCount = self.droppedFrameCountInLastSecond;
     NSInteger drawnFrameCount = self.drawnFrameCountInLastSecond;
 
-    NSString *droppedString;
     NSString *drawnString;
 
     if (droppedFrameCount <= 0) {
         self.meterLabel.backgroundColor = self.meterPerfectColor;
-
-        droppedString = @"--";
     } else {
         if (droppedFrameCount <= 2) {
             self.meterLabel.backgroundColor = self.meterGoodColor;
         } else {
             self.meterLabel.backgroundColor = self.meterBadColor;
         }
-
-        droppedString = [NSString stringWithFormat:@"%ld", (long) droppedFrameCount];
     }
 
     if (drawnFrameCount == -1) {
@@ -87,7 +82,7 @@
         drawnString = [NSString stringWithFormat:@"%ld", (long) drawnFrameCount];
     }
 
-    self.meterLabel.text = [NSString stringWithFormat:@"%@   %@", droppedString, drawnString];
+    self.meterLabel.text = [NSString stringWithFormat:@"FPS:   %@", drawnString];
 }
 
 - (CFTimeInterval)hardwareFrameDuration
@@ -153,12 +148,13 @@
     self.window.windowLevel = self.windowLevel;
     self.window.userInteractionEnabled = NO;
 
-    CGFloat const kMeterWidth = 105.0;
+    CGFloat const kMeterWidth = 60.0;
     CGFloat xOrigin = 0.0;
+    CGFloat xPadding = 5.0;
     UIViewAutoresizing autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     switch (self.position) {
         case KMCGeigerCounterPositionLeft:
-            xOrigin = 0.0;
+            xOrigin = xPadding;
             autoresizingMask |= UIViewAutoresizingFlexibleRightMargin;
             break;
         case KMCGeigerCounterPositionMiddle:
@@ -166,19 +162,28 @@
             autoresizingMask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
             break;
         case KMCGeigerCounterPositionRight:
-            xOrigin = (CGRectGetWidth(self.window.bounds) - kMeterWidth);
+            xOrigin = (CGRectGetWidth(self.window.bounds) - kMeterWidth - xPadding);
             autoresizingMask |= UIViewAutoresizingFlexibleLeftMargin;
             break;
     }
 
-    CGFloat meterHeight = fmax(20.0, fmin(30.0, [UIApplication sharedApplication].statusBarFrame.size.height));
-    self.meterLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin, 0.0,
-                                                                kMeterWidth, meterHeight)];
+    UIFont *font = [UIFont boldSystemFontOfSize:10.0];
+
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    BOOL isLargeStatusBar = statusBarHeight > 20.0;
+
+    CGFloat meterHeight = font.lineHeight + 2.0;
+    self.meterLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOrigin,
+                                                                isLargeStatusBar ? (statusBarHeight - meterHeight + 2.0) : statusBarHeight,
+                                                                kMeterWidth,
+                                                                meterHeight)];
     self.meterLabel.autoresizingMask = autoresizingMask;
-    self.meterLabel.font = [UIFont boldSystemFontOfSize:12.0];
+    self.meterLabel.font = font;
     self.meterLabel.backgroundColor = [UIColor grayColor];
     self.meterLabel.textColor = [UIColor whiteColor];
     self.meterLabel.textAlignment = NSTextAlignmentCenter;
+    self.meterLabel.layer.cornerRadius = 0.5 * meterHeight;
+    self.meterLabel.layer.masksToBounds = true;
     [self.window.rootViewController.view addSubview:self.meterLabel];
 
     self.window.hidden = NO;
